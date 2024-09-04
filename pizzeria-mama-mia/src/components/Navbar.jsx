@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CartContext } from "./CartContext"; // Importar el contexto
+import { CartContext } from "./CartContext";
 
 const Navbar = () => {
-  const { total } = useContext(CartContext); // Consumir el total del carrito
+  const { total } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleCartClick = () => {

@@ -4,7 +4,7 @@ import CardPizza from "../components/CardPizza";
 import { CartContext } from "../components/CartContext";
 
 const Home = () => {
-  const { addToCart } = useContext(CartContext); // Consumir la función para añadir al carrito
+  const { addToCart } = useContext(CartContext);
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
