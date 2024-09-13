@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import CardPizza from "../components/CardPizza";
-import { CartContext } from "../components/CartContext";
+import { useCart } from "../components/CartContext";
 
 const Home = () => {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCart();
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

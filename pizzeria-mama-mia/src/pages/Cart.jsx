@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
-import { CartContext } from "../components/CartContext";
+import React from "react";
+import { useCart } from "../components/CartContext";
+import { useUser } from "../components/UserContext";
 
 const Cart = () => {
   const {
@@ -8,11 +9,12 @@ const Cart = () => {
     increaseQuantity,
     decreaseQuantity,
     total,
-  } = useContext(CartContext);
+  } = useCart();
+  const { token } = useUser();
 
   return (
     <div className="productos">
-      <h2>Carrito de Compras</h2>
+      s<h2>Carrito de Compras</h2>
       {cartItems.length === 0 ? (
         <p>Tu carrito está vacío</p>
       ) : (
@@ -41,7 +43,10 @@ const Cart = () => {
         </ul>
       )}
       <h3>Total: ${total.toLocaleString()}</h3>
-      <button className="btn btn-dark">Pagar</button>
+      <button className="btn btn-dark" disabled={!token}>
+        Pagar
+      </button>
+      {!token && <p>Inicia sesión para poder realizar el pago.</p>}
     </div>
   );
 };

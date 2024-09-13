@@ -49,6 +49,7 @@ body {
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  text-decoration: none;
 }
 
 .boton:hover,

@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CartContext } from "./CartContext";
+import { useUser } from "./UserContext";
+import { useCart } from "./CartContext";
 
 const Navbar = () => {
-  const { total } = useContext(CartContext);
+  const { token, logout } = useUser();
+  const { total } = useCart();
   const navigate = useNavigate();
 
-  const handleCartClick = () => {
-    navigate("/cart");
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -18,22 +21,39 @@ const Navbar = () => {
       <ul className="contentNavBar">
         <li className="navItem">
           <Link to="/" className="boton">
-            &#127829; Home
+            🏠 Home
           </Link>
         </li>
-        <li className="navItem">
-          <Link to="/login" className="boton">
-            &#128272; Ingresar
-          </Link>
-        </li>
-        <li className="navItem">
-          <Link to="/register" className="boton">
-            &#128272; Registrar
-          </Link>
-        </li>
+        {token ? (
+          <>
+            <li className="navItem">
+              <Link to="/profile" className="boton">
+                👤 Profile
+              </Link>
+            </li>
+            <li className="navItem">
+              <button className="boton" onClick={handleLogout}>
+                🔒 Logout
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="navItem">
+              <Link to="/login" className="boton">
+                🔑 Login
+              </Link>
+            </li>
+            <li className="navItem">
+              <Link to="/register" className="boton">
+                📝 Register
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
-      <button className="botonCarro" onClick={handleCartClick}>
-        🛒 Total: $ {total.toLocaleString()}
+      <button className="botonCarro" onClick={() => navigate("/cart")}>
+        🛒 Total: ${total.toLocaleString()}
       </button>
     </nav>
   );

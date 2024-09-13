@@ -1,39 +1,44 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./components/CartContext";
+import { UserProvider } from "./components/UserContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Cart from "./pages/Cart";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Cart from "./pages/Cart";
-import Pizza from "./pages/Pizza";
 import Profile from "./pages/Profile";
+import Pizza from "./pages/Pizza";
 import NotFound from "./pages/NotFound";
-import { CartProvider } from "./components/CartContext";
+import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
+
 function App() {
   return (
-    <CartProvider>
-      {" "}
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/pizza/:id" element={<Pizza />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/404" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/404" />} />{" "}
-        </Routes>
-        <Footer />
-      </Router>
-    </CartProvider>
+    <UserProvider>
+      <CartProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/pizza/:id" element={<Pizza />} />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </CartProvider>
+    </UserProvider>
   );
 }
 

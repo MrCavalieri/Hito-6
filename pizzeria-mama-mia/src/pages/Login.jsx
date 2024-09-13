@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useUser } from "../components/UserContext";
 
 function Login() {
+  const { token } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  if (token) {
+    return <Navigate to="/" />; // Redirige al home si el usuario ya está autenticado
+  }
+
   const logInCorrecto = (e) => {
     e.preventDefault();
-
     if (!email && !password) {
       setError("Ambos campos son obligatorios");
     } else if (!email) {
